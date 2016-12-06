@@ -12,20 +12,24 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by arindamnath on 25/11/16.
  */
 public class SplashActivity extends AppCompatActivity {
 
-    private ImageView splashImage;
+    @BindView(R.id.splash_image) ImageView splashImage;
     private AnimationDrawable splashAnim;
     private Animation animFast, animSlow, animVerySlow;
-    private TextView splashText;
+    @BindView(R.id.splash_text) TextView splashText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        ButterKnife.bind(this);
 
         animFast = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.float_anim);
@@ -34,11 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         animVerySlow = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.float_anim_very_slow);
 
-        splashImage = (ImageView) findViewById(R.id.splash_image);
-        splashText = (TextView) findViewById(R.id.splash_text);
-
         splashAnim = (AnimationDrawable) splashImage.getBackground();
-
         splashImage.post(new Runnable() {
             @Override
             public void run() {

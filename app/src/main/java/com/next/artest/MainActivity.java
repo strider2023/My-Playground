@@ -3,15 +3,26 @@ package com.next.artest;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    private ImageView splashImage;
+public class MainActivity extends AppCompatActivity
+        implements PopupMenu.OnMenuItemClickListener {
+
+    @BindView(R.id.splash_image) ImageView splashImage;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.open_menu) ImageView showMenu;
+
     private AnimationDrawable splashAnim;
     private Animation animFast, animSlow, animVerySlow;
 
@@ -19,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         animFast = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.float_anim);
@@ -27,10 +42,7 @@ public class MainActivity extends AppCompatActivity {
         animVerySlow = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.float_anim_very_slow);
 
-        splashImage = (ImageView) findViewById(R.id.splash_image);
-
         splashAnim = (AnimationDrawable) splashImage.getBackground();
-
         splashImage.post(new Runnable() {
             @Override
             public void run() {
@@ -42,12 +54,41 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.cloud_image_2).startAnimation(animSlow);
         findViewById(R.id.cloud_image_3).startAnimation(animFast);
         findViewById(R.id.cloud_image_4).startAnimation(animVerySlow);
+    }
 
-        findViewById(R.id.launch_ar_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, UnityPlayerNativeActivity.class));
-            }
-        });
+    @OnClick({R.id.launch_words_btn, R.id.launch_numbers_btn})
+    void onLauncherSelected(FloatingActionButton fab) {
+        Intent intent = new Intent(MainActivity.this, SelectTypeActivity.class);
+        switch (fab.getId()) {
+            case R.id.launch_words_btn:
+                intent.putExtra("title", "Learning Alphabets");
+                break;
+            case R.id.launch_numbers_btn:
+                intent.putExtra("title", "Learning Numbers");
+                break;
+        }
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.open_menu)
+    void showOptionsMenu() {
+        PopupMenu popupMenu = new PopupMenu(this, showMenu);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.menu_select_type);
+        popupMenu.show();
+    }
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logout:
+                finish();
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -18,6 +18,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="UnityThemeSelector" parent="android:Theme.Light.NoTitleBar.Fullscreen"/>
+    <style name="UnityThemeSelector" parent="android:Theme.Light.NoTitleBar.Fullscreen" />
 
 </resources>
