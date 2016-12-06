@@ -41,10 +41,18 @@ public class SelectTypeActivity extends AppCompatActivity {
 
         adapterSelectActivity = new AdapterSelectActivity(this);
         activityTypeList.setAdapter(adapterSelectActivity);
-        typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_launcher, "Fun with Words", "Test"));
-        typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_sing_along, "Sing Along", "Test"));
-        typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_flash_card, "Flash Cards", "Test"));
-        typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_train, "Word Train", "Test"));
+        switch (getIntent().getIntExtra(ACTIVITY_LIST_TYPE, 0)) {
+            case 0:
+                typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_launcher, "Fun with Words", "Test description"));
+                typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_sing_along, "Sing Along", "Test description"));
+                typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_flash_card, "Flash Cards", "Test description"));
+                typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_train, "Word Train", "Test description"));
+                break;
+            case 1:
+                typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_launcher, "Fun with Numbers", "Test description"));
+                typeDAOs.add(new ActivityTypeDAO(R.mipmap.ic_flash_card, "Number Games", "Test description"));
+                break;
+        }
         adapterSelectActivity.setData(typeDAOs);
 
         activityTypeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

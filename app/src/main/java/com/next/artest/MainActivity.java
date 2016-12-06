@@ -62,9 +62,11 @@ public class MainActivity extends AppCompatActivity
         switch (fab.getId()) {
             case R.id.launch_words_btn:
                 intent.putExtra("title", "Learning Alphabets");
+                intent.putExtra(SelectTypeActivity.ACTIVITY_LIST_TYPE, 0);
                 break;
             case R.id.launch_numbers_btn:
                 intent.putExtra("title", "Learning Numbers");
+                intent.putExtra(SelectTypeActivity.ACTIVITY_LIST_TYPE, 1);
                 break;
         }
         startActivity(intent);
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_logout:
                 finish();
