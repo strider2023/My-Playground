@@ -2,14 +2,19 @@ package com.next.artest;
 
 import com.unity3d.player.*;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import java.io.FileOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +42,25 @@ public class UnityPlayerActivity extends AppCompatActivity {
     void goBack() {
         finish();
     }
+
+	@OnClick(R.id.unity_screenshot_btn)
+	void takeScreenshot() {
+		Bitmap bitmap = Bitmap.createBitmap(
+				mUnityPlayer.getWidth(),
+				mUnityPlayer.getHeight(),
+				Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		mUnityPlayer.draw(canvas);
+		try {
+			FileOutputStream output = new FileOutputStream(
+					Environment.getExternalStorageDirectory() + "/screenshot_"+
+							String.valueOf(System.currentTimeMillis()) + ".png");
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+			output.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// Quit Unity
 	@Override protected void onDestroy () {

@@ -55,6 +55,8 @@
         <item>-1</item>
     </string-array>
 
+    <string name="read_sample_text">Hey this a reading junction sample text for demo. Please do not read further!</string>
+
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->

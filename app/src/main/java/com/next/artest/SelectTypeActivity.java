@@ -62,6 +62,8 @@ public class SelectTypeActivity extends AppCompatActivity {
                     case 0:
                         startActivity(new Intent(SelectTypeActivity.this, UnityPlayerActivity.class));
                         break;
+                    case 1:
+                        startActivity(new Intent(SelectTypeActivity.this, ReadActivity.class));
                 }
             }
         });
